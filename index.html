@@ -103,6 +103,21 @@
         font-size: 0.8rem;
       }
     }
+
+    /* استایل دکمه پخش موزیک */
+    #playMusic {
+      padding: 10px 20px;
+      background: #2575fc;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    #playMusic:hover {
+      background: #6a11cb;
+    }
   </style>
 </head>
 <body>
@@ -125,8 +140,30 @@
     <a href="" rel="noopener noreferrer">درباره ما</a>
   </div>
 
+  <!-- دکمه پخش موزیک -->
+  <button id="playMusic">پخش موزیک</button>
+  <!-- عنصر صوتی با حلقه تکرار -->
+  <audio id="bgMusic" loop>
+    <source src="https://bkalam.ir/wp-content/uploads/2023/10/Alireza%20Eftekhari%20-%20Ghadah%20[Demo].mp3" type="audio/mpeg">
+    مرورگر شما از پخش این فایل صوتی پشتیبانی نمی‌کند.
+  </audio>
+
   <footer>
     <p>&copy; 2025 آموزشگاه زبان هامون - تمامی حقوق محفوظ است.</p>
   </footer>
+
+  <script>
+    // اضافه کردن رویداد کلیک برای پخش یا توقف موزیک
+    document.getElementById("playMusic").addEventListener("click", function() {
+      var audio = document.getElementById("bgMusic");
+      if(audio.paused){
+        audio.play();
+        this.textContent = "توقف موزیک";
+      } else {
+        audio.pause();
+        this.textContent = "پخش موزیک";
+      }
+    });
+  </script>
 </body>
 </html>
