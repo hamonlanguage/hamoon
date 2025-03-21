@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پردیا نیکبخت</title>
+    <script>
+        // بررسی ورود کاربر
+        function checkAuthentication() {
+            const isAuthenticated = sessionStorage.getItem('authenticated');
+
+            if (!isAuthenticated) {
+                // در صورت عدم ورود، کاربر به صفحه لاگین هدایت می‌شود
+                window.location.href = 'index.html';
+            }
+        }
+
+        window.onload = checkAuthentication;
+    </script>
+    <style>
+        body {
+            margin: 0;
+            font-family: "Vazir", Arial, sans-serif;
+            background: linear-gradient(to bottom right, #ff9a9e, #fad0c4, #fbc2eb);
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 90%;
+            background: #ffffff;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        header {
+            background: linear-gradient(90deg, #36d1dc, #5b86e5);
+            color: white;
+            padding: 20px 30px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logout-button {
+            background: #ff4b5c;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .logout-button:hover {
+            background: #d43f4f;
+        }
+
+        .profile {
+            padding: 30px;
+        }
+
+        .profile-pic img {
+            width: 150px;
+            height: auto;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            margin-bottom: 15px;
+            border: 5px solid #36d1dc;
+        }
+
+        .info, .grades, .classes, .transcript {
+            margin-bottom: 20px;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            background: #fdfdfd;
+        }
+
+        h2 {
+            margin: 0 0 15px;
+            font-size: 20px;
+            color: #5b86e5;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        ul li {
+            margin-bottom: 10px;
+            padding: 10px;
+            background: #f0f8ff;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        ul li span {
+            font-weight: bold;
+            color: #333;
+            font-size: 18px;
+        }
+
+        /* استایل جدید برای کادر پیام قبول و مجاز */
+        .passed {
+            font-weight: bold;
+            font-size: 18px;
+            color: green;
+            border: 2px solid #b7e4c7;
+            background-color: #d8f3dc;
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 15px;
+            display: inline-block;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background: #5b86e5;
+            color: white;
+        }
+
+        td {
+            background: #f9f9f9;
+        }
+
+        button {
+            background: linear-gradient(to right, #36d1dc, #5b86e5);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background: linear-gradient(to right, #5b86e5, #36d1dc);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .semester {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+            margin-bottom: 30px;
+        }
+
+        .semester button {
+            background: #5b86e5;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .semester button:hover {
+            background: #36d1dc;
+        }
+
+        .grades-table {
+            display: none;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div>    فاطیما بذر افکن       </div>
+            <button class="logout-button" onclick="logout()">خروج</button>
+        </header>
+        <div class="profile">
+            <div class="profile-pic">
+                <img src="https://avalgraphic.com/wp-content/uploads/edd/2022/10/132103375bO-AvalGraphic.jpg" alt="عکس دانش‌آموز">
+            </div>
+            <h2>Teacher: Ms.Rajabi</h2>
+        </div>
+
+        <div class="semester">
+            <button onclick="showGrades('spring')">بهار</button>
+            <button onclick="showGrades('summer')">تابستان</button>
+            <button onclick="showGrades('autumn')">پاییز</button>
+            <button onclick="showGrades('winter')">زمستان</button>
+        </div>
+
+        <div id="spring" class="grades-table">
+            <h2>نمرات ترم بهار</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>جمع کل</th>
+                        <th>پایان ترم</th>
+                        <th>میان ترم</th>
+                        <th>فعالیت سرکلاسی</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p id="spring-pass" class="passed"></p>
+        </div>
+
+        <div id="summer" class="grades-table">
+            <h2>نمرات ترم تابستان</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>جمع کل</th>
+                        <th>پایان ترم</th>
+                        <th>میان ترم</th>
+                        <th>فعالیت سرکلاسی</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p id="summer-pass" class="passed"></p>
+        </div>
+
+        <div id="autumn" class="grades-table">
+            <h2>نمرات ترم پاییز</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>جمع کل</th>
+                        <th>پایان ترم</th>
+                        <th>میان ترم</th>
+                        <th>فعالیت سرکلاسی</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p id="autumn-pass" class="passed"></p>
+        </div>
+
+        <div id="winter" class="grades-table">
+            <h2>نمرات ترم زمستان</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>جمع کل</th>
+                        <th>پایان ترم</th>
+                        <th>میان ترم</th>
+                        <th>فعالیت سرکلاسی</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>91.5 </td>
+                        <td>24.5</td>
+                        <td>30</td>
+                        <td>37</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p id="winter-pass" class="passed"></p>
+        </div>
+
+        <div class="classes">
+            <h2>گروه</h2>
+            <ul>
+                <li>
+                    <span>LetsStarter</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="transcript">
+            <h2>کارنامه</h2>
+            <button>دانلود کارنامه</button>
+        </div>
+    </div>
+
+    <script>
+        function showGrades(semester) {
+            const semesters = ['spring', 'summer', 'autumn', 'winter'];
+            semesters.forEach(function (sem) {
+                document.getElementById(sem).style.display = 'none';
+                document.getElementById(sem + '-pass').textContent = ''; // بازنشانی پیام قبول
+            });
+            document.getElementById(semester).style.display = 'block';
+            checkPass(semester);
+        }
+
+        function checkPass(semester) {
+            const totalGrade = parseInt(document.querySelector(`#${semester} tbody tr td:first-child`).textContent);
+
+            // نمایش پیام در صورت قبولی
+            if (totalGrade >= 10) {
+                document.getElementById(semester + '-pass').textContent = 'قبول و مجاز به ورود به ترم بهار    ';
+            } else {
+                document.getElementById(semester + '-pass').textContent = '';
+            }
+        }
+
+        function logout() {
+            sessionStorage.removeItem('authenticated');
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>
