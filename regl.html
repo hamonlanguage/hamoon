@@ -131,6 +131,12 @@
         return;
       }
 
+      // شرط اضافه برای ورود با نام کاربری admin و پسورد admin28
+      if (username === "admin" && password === "admin28") {
+        window.location.href = "level.html";
+        return;
+      }
+
       // دریافت پسوردهای استفاده شده از localStorage یا آرایه خالی اگر موجود نباشد
       const usedPasswords = JSON.parse(localStorage.getItem("usedPasswords")) || [];
 
