@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>صفحه ورود</title>
+  <style>
+    /* پس‌زمینه و استایل کلی */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #6D5BBA, #8D58BF);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    /* فرم ورود و ظرف اصلی */
+    .login-container {
+      background: #fff;
+      padding: 2em;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+      width: 90%;
+      max-width: 300px;
+      text-align: center;
+      direction: rtl;
+      animation: scaleIn 0.5s ease-in-out;
+    }
+
+    /* انیمیشن ورود فرم */
+    @keyframes scaleIn {
+      0% {
+        opacity: 0;
+        transform: scale(0.8);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    /* عنوان صفحه */
+    h2 {
+      margin-bottom: 1em;
+      color: #333;
+    }
+
+    /* استایل فیلدهای ورودی */
+    .login-input {
+      width: 100%;
+      padding: 10px;
+      margin: 0.5em 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 1em;
+      transition: border-color 0.3s;
+    }
+    .login-input:focus {
+      border-color: #6D5BBA;
+      outline: none;
+    }
+
+    /* دکمه ورود */
+    .login-button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 1em;
+      background: #6D5BBA;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      font-size: 1em;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .login-button:hover {
+      background: #5949a3;
+    }
+
+    /* پیام خطا یا اطلاع با انیمیشن ظاهر شدن */
+    .message {
+      display: none;
+      color: red;
+      margin-top: 1em;
+      animation: fadeIn 0.5s;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* بهبود نمایش برای موبایل */
+    @media (max-width: 480px) {
+      .login-container {
+        padding: 1.5em;
+        width: 95%;
+      }
+      .login-input, .login-button {
+        font-size: 0.9em;
+        padding: 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h2>ورود</h2>
+    <input type="text" id="username" placeholder="نام کاربری" class="login-input">
+    <input type="password" id="password" placeholder="پسورد" class="login-input">
+    <button onclick="checkLogin()" class="login-button">ورود</button>
+    <div id="message" class="message"></div>
+  </div>
+
+  <script>
+    function checkLogin() {
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+      const messageDiv = document.getElementById("message");
+
+      // اگر نام کاربری و پسورد "local" وارد شد، localStorage پاک می‌شود
+      if (username === "local" && password === "local") {
+        localStorage.clear();
+        messageDiv.style.color = "green";
+        messageDiv.textContent = "Local Storage پاک شد.";
+        messageDiv.style.display = "block";
+        setTimeout(() => { messageDiv.style.display = "none"; }, 3000);
+        return;
+      }
+
+      // دریافت پسوردهای استفاده شده از localStorage یا آرایه خالی اگر موجود نباشد
+      const usedPasswords = JSON.parse(localStorage.getItem("usedPasswords")) || [];
+
+      // بررسی اینکه آیا پسورد قبلاً استفاده شده است یا خیر
+      if (usedPasswords.includes(password)) {
+        messageDiv.style.color = "red";
+        messageDiv.textContent = "این پسورد قبلاً استفاده شده است";
+        messageDiv.style.display = "block";
+        setTimeout(() => { messageDiv.style.display = "none"; }, 3000);
+        return;
+      }
+
+      // بررسی اعتبار ورودی برای ورود به صفحات مختلف
+      if (username === "admin" && password === "admin") {
+        usedPasswords.push(password);
+        localStorage.setItem("usedPasswords", JSON.stringify(usedPasswords));
+        window.location.href = "level.html";
+      } else if (username === "admin" && password === "admin1") {
+        usedPasswords.push(password);
+        localStorage.setItem("usedPasswords", JSON.stringify(usedPasswords));
+        window.location.href = "level.html";
+      } else if (username === "admin" && password === "admin9") {
+        usedPasswords.push(password);
+        localStorage.setItem("usedPasswords", JSON.stringify(usedPasswords));
+        window.location.href = "level.html";
+      } else if (username === "admin" && password === "admin14") {
+        usedPasswords.push(password);
+        localStorage.setItem("usedPasswords", JSON.stringify(usedPasswords));
+        window.location.href = "level.html";
+      } else {
+        messageDiv.style.color = "red";
+        messageDiv.textContent = "نام کاربری یا پسورد اشتباه است";
+        messageDiv.style.display = "block";
+        setTimeout(() => { messageDiv.style.display = "none"; }, 3000);
+      }
+    }
+  </script>
+</body>
+</html>

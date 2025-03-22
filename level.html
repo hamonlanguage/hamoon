@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>آزمون تعیین سطح زبان انگلیسی</title>
+  <style>
+    /* استایل‌های کلی */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f5f5f5;
+      color: #333;
+    }
+    .container {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 5px;
+    }
+    h1, h2, h3 {
+      color: #2c3e50;
+    }
+    .section {
+      border: 1px solid #ccc;
+      padding: 15px;
+      margin-bottom: 20px;
+      border-radius: 5px;
+    }
+    .question {
+      margin-bottom: 15px;
+    }
+    .options label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    .submit-btn {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin-bottom: 20px;
+      background: #3498db;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    #result {
+      background: #ecf0f1;
+      padding: 15px;
+      border: 1px solid #bdc3c7;
+      border-radius: 5px;
+    }
+    #timer {
+      font-size: 18px;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    /* استایل مودال */
+    .modal {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+    }
+    .modal-content {
+      background: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      text-align: center;
+      width: 80%;
+      max-width: 400px;
+    }
+    .modal-button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background: #2ecc71;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    /* استایل رسپانسیو */
+    @media (max-width: 600px) {
+      .container {
+        margin: 10px;
+        padding: 10px;
+      }
+      .modal-content {
+        width: 90%;
+      }
+    }
+  </style>
+  <script>
+    // در صورت ریلود صفحه، هدایت به index.html
+    if (performance.navigation.type === performance.navigation.TYPE_RELOAD) {
+      window.location.href = "index.html";
+    }
+  </script>
+</head>
+<body>
+  <!-- مودال شروع -->
+  <div class="modal" id="startModal">
+    <div class="modal-content">
+      <h2>آزمون تعیین سطح زبان انگلیسی</h2>
+      <p>زمان این آزمون 15 دقیقه است.</p>
+      <button class="modal-button" onclick="startTest()">شروع آزمون</button>
+    </div>
+  </div>
+
+  <!-- محتوای آزمون (مخفی تا زمان شروع) -->
+  <div class="container" id="testContainer" style="display:none;">
+    <div id="timer">15:00</div>
+    <h1>آزمون تعیین سطح زبان انگلیسی</h1>
+    <form id="languageTest">
+      <!-- بخش واژگان -->
+      <div class="section" id="vocabulary">
+        <h2>بخش واژگان</h2>
+
+        <!-- سوال 1 -->
+        <div class="question">
+          <p><strong>1. معادل مناسب واژه‌ی "happy" (خوشحال) کدام گزینه است؟</strong></p>
+          <div class="options">
+            <label><input type="radio" name="qv1" value="A"> A) glad</label>
+            <label><input type="radio" name="qv1" value="B"> B) sad</label>
+            <label><input type="radio" name="qv1" value="C"> C) angry</label>
+            <label><input type="radio" name="qv1" value="D"> D) tired</label>
+          </div>
+        </div>
+
+        <!-- سوال 2 -->
+        <div class="question">
+          <p><strong>2. اصطلاح "break a leg" در موقعیت‌های نمایشی به چه معناست؟</strong></p>
+          <div class="options">
+            <label><input type="radio" name="qv2" value="A"> A) شانس بد</label>
+            <label><input type="radio" name="qv2" value="B"> B) موفقیت و آرزوی موفقیت</label>
+            <label><input type="radio" name="qv2" value="C"> C) آسیب دیدن</label>
+            <label><input type="radio" name="qv2" value="D"> D) از پای افتادن</label>
+          </div>
+        </div>
+
+        <!-- سوال 3 -->
+        <div class="question">
+          <p><strong>3. کدام گزینه، ضد کلمه‌ی "big" (بزرگ) را نشان می‌دهد؟</strong></p>
+          <div class="options">
+            <label><input type="radio" name="qv3" value="A"> A) huge</label>
+            <label><input type="radio" name="qv3" value="B"> B) small</label>
+            <label><input type="radio" name="qv3" value="C"> C) giant</label>
+            <label><input type="radio" name="qv3" value="D"> D) large</label>
+          </div>
+        </div>
+
+        <!-- سوال 4 -->
+        <div class="question">
+          <p><strong>4. در جمله‌ی "She sings beautifully." واژه‌ی "beautifully" چه نقشی دارد؟</strong></p>
+          <div class="options">
+            <label><input type="radio" name="qv4" value="A"> A) اسم</label>
+            <label><input type="radio" name="qv4" value="B"> B) صفت</label>
+            <label><input type="radio" name="qv4" value="C"> C) قید</label>
+            <label><input type="radio" name="qv4" value="D"> D) فعل</label>
+          </div>
+        </div>
+
+        <!-- سوال 5 -->
+        <div class="question">
+          <p><strong>5. نزدیک‌ترین معنی به واژه‌ی "smart" (باهوش) کدام گزینه است؟</strong></p>
+          <div class="options">
+            <label><input type="radio" name="qv5" value="A"> A) clever</label>
+            <label><input type="radio" name="qv5" value="B"> B) lazy</label>
+            <label><input type="radio" name="qv5" value="C"> C) quiet</label>
+            <label><input type="radio" name="qv5" value="D"> D) noisy</label>
+          </div>
+        </div>
+
+        <!-- سوال 6 -->
+        <div class="question">
+          <p><strong>6. کدام گزینه، ضد کلمه‌ی "cold" (سرد) است؟</strong></p>
+          <div class="options">
+            <label><input type="radio" name="qv6" value="A"> A) hot</label>
+            <label><input type="radio" name="qv6" value="B"> B) cool</label>
+            <label><input type="radio" name="qv6" value="C"> C) chilly</label>
+            <label><input type="radio" name="qv6" value="D"> D) freezing</label>
+          </div>
+        </div>
+
+        <!-- سوال 7 -->
+        <div class="question">
+          <p><strong>7. جمله‌ی زیر را کامل کنید:<br>"He is very ___ in solving puzzles."</strong></p>
+          <div class="options">
+            <label><input type="radio" name="qv7" value="A"> A) good</label>
+            <label><input type="radio" name="qv7" value="B"> B) fast</label>
+            <label><input type="radio" name="qv7" value="C"> C) clever</label>
+            <label><input type="radio" name="qv7" value="D"> D) strong</label>
+          </div>
+        </div>
+
+        <!-- سوال 8 -->
+        <div class="question">
+          <p><strong>8. معادل مناسب واژه‌ی "begin" (شروع کردن) کدام است؟</strong></p>
+          <div class="options">
+            <label><input type="radio" name="qv8" value="A"> A) finish</label>
+            <label><input type="radio" name="qv8" value="B"> B) start</label>
+            <label><input type="radio" name="qv8" value="C"> C) close</label>
+            <label><input type="radio" name="qv8" value="D"> D) end</label>
+          </div>
+        </div>
+
+        <!-- سوال 9 -->
+        <div class="question">
+          <p><strong>9. کدام گزینه نزدیک‌ترین معنی به "yell" (جیغ زدن) را ارائه می‌دهد؟</strong></p>
+          <div class="options">
+            <label><input type="radio" name="qv9" value="A"> A) whisper</label>
+            <label><input type="radio" name="qv9" value="B"> B) speak quietly</label>
+            <label><input type="radio" name="qv9" value="C"> C) shout</label>
+            <label><input type="radio" name="qv9" value="D"> D) murmur</label>
+          </div>
+        </div>
+
+        <!-- سوال 10 -->
+        <div class="question">
+          <p><strong>10. واژه‌ی "brave" (شجاع) به چه معناست؟</strong></p>
+          <div class="options">
+            <label><input type="radio" name="qv10" value="A"> A) timid</label>
+            <label><input type="radio" name="qv10" value="B"> B) courageous</label>
+            <label><input type="radio" name="qv10" value="C"> C) fearful</label>
+            <label><input type="radio" name="qv10" value="D"> D) weak</label>
+          </div>
+        </div>
+      </div> <!-- پایان بخش واژگان -->
+
+      <!-- بخش گرامر -->
+      <div class="section" id="grammar">
+        <h2>بخش گرامر</h2>
+        
+        <!-- حال ساده -->
+        <h3>1. حال ساده (Present Simple)</h3>
+        <div class="question">
+          <p><strong>1. انتخاب جمله صحیح:</strong> کدام گزینه جمله‌ای درست در زمان حال ساده است؟</p>
+          <div class="options">
+            <label><input type="radio" name="qg1" value="A"> A) He go to school every day.</label>
+            <label><input type="radio" name="qg1" value="B"> B) He goes to school every day.</label>
+            <label><input type="radio" name="qg1" value="C"> C) He going to school every day.</label>
+            <label><input type="radio" name="qg1" value="D"> D) He gone to school every day.</label>
+          </div>
+        </div>
+        <div class="question">
+          <p><strong>2. تکمیل جمله:</strong> جمله زیر را کامل کنید:<br>"She ___ coffee every morning."</p>
+          <div class="options">
+            <label><input type="radio" name="qg2" value="A"> A) drink</label>
+            <label><input type="radio" name="qg2" value="B"> B) drinks</label>
+            <label><input type="radio" name="qg2" value="C"> C) drinking</label>
+            <label><input type="radio" name="qg2" value="D"> D) drank</label>
+          </div>
+        </div>
+        <div class="question">
+          <p><strong>3. انتخاب جمله منفی صحیح:</strong> کدام گزینه جمله منفی صحیح در زمان حال ساده است؟</p>
+          <div class="options">
+            <label><input type="radio" name="qg3" value="A"> A) They doesn't like chocolate.</label>
+            <label><input type="radio" name="qg3" value="B"> B) They don't like chocolate.</label>
+            <label><input type="radio" name="qg3" value="C"> C) They not like chocolate.</label>
+            <label><input type="radio" name="qg3" value="D"> D) They doesn't likes chocolate.</label>
+          </div>
+        </div>
+        
+        <!-- حال استمراری -->
+        <h3>2. حال استمراری (Present Continuous)</h3>
+        <div class="question">
+          <p><strong>4. انتخاب جمله صحیح:</strong> کدام گزینه جمله‌ای صحیح در زمان حال استمراری است؟</p>
+          <div class="options">
+            <label><input type="radio" name="qg4" value="A"> A) He is playing football now.</label>
+            <label><input type="radio" name="qg4" value="B"> B) He playing football now.</label>
+            <label><input type="radio" name="qg4" value="C"> C) He are playing football now.</label>
+            <label><input type="radio" name="qg4" value="D"> D) He be playing football now.</label>
+          </div>
+        </div>
+        <div class="question">
+          <p><strong>5. تکمیل جمله:</strong> جمله زیر را کامل کنید:<br>"They ___ watching a movie at the moment."</p>
+          <div class="options">
+            <label><input type="radio" name="qg5" value="A"> A) is</label>
+            <label><input type="radio" name="qg5" value="B"> B) are</label>
+            <label><input type="radio" name="qg5" value="C"> C) was</label>
+            <label><input type="radio" name="qg5" value="D"> D) be</label>
+          </div>
+        </div>
+        <div class="question">
+          <p><strong>6. انتخاب جمله منفی صحیح:</strong> کدام گزینه جمله منفی صحیح در زمان حال استمراری است؟</p>
+          <div class="options">
+            <label><input type="radio" name="qg6" value="A"> A) She isn't reading a book.</label>
+            <label><input type="radio" name="qg6" value="B"> B) She not reading a book.</label>
+            <label><input type="radio" name="qg6" value="C"> C) She don't reading a book.</label>
+            <label><input type="radio" name="qg6" value="D"> D) She isn't read a book.</label>
+          </div>
+        </div>
+        
+        <!-- حال کامل -->
+        <h3>3. حال کامل (Present Perfect)</h3>
+        <div class="question">
+          <p><strong>7. انتخاب جمله صحیح:</strong> کدام گزینه جمله‌ای صحیح در زمان حال کامل است؟</p>
+          <div class="options">
+            <label><input type="radio" name="qg7" value="A"> A) I have seen that film.</label>
+            <label><input type="radio" name="qg7" value="B"> B) I seen that film.</label>
+            <label><input type="radio" name="qg7" value="C"> C) I have saw that film.</label>
+            <label><input type="radio" name="qg7" value="D"> D) I see that film.</label>
+          </div>
+        </div>
+        <div class="question">
+          <p><strong>8. تکمیل جمله:</strong> جمله زیر را کامل کنید:<br>"We ___ visited Paris."</p>
+          <div class="options">
+            <label><input type="radio" name="qg8" value="A"> A) has</label>
+            <label><input type="radio" name="qg8" value="B"> B) have</label>
+            <label><input type="radio" name="qg8" value="C"> C) had</label>
+            <label><input type="radio" name="qg8" value="D"> D) will have</label>
+          </div>
+        </div>
+        <div class="question">
+          <p><strong>9. انتخاب جمله منفی صحیح:</strong> کدام گزینه جمله منفی صحیح در زمان حال کامل است؟</p>
+          <div class="options">
+            <label><input type="radio" name="qg9" value="A"> A) He hasn't finished his homework yet.</label>
+            <label><input type="radio" name="qg9" value="B"> B) He haven't finished his homework yet.</label>
+            <label><input type="radio" name="qg9" value="C"> C) He not finished his homework yet.</label>
+            <label><input type="radio" name="qg9" value="D"> D) He didn't finished his homework yet.</label>
+          </div>
+        </div>
+        
+        <!-- گذشته ساده -->
+        <h3>4. گذشته ساده (Past Simple)</h3>
+        <div class="question">
+          <p><strong>10. انتخاب جمله صحیح:</strong> کدام گزینه جمله‌ای صحیح در زمان گذشته ساده است؟</p>
+          <div class="options">
+            <label><input type="radio" name="qg10" value="A"> A) I visited my friend yesterday.</label>
+            <label><input type="radio" name="qg10" value="B"> B) I visit my friend yesterday.</label>
+            <label><input type="radio" name="qg10" value="C"> C) I visiting my friend yesterday.</label>
+            <label><input type="radio" name="qg10" value="D"> D) I have visited my friend yesterday.</label>
+          </div>
+        </div>
+        <div class="question">
+          <p><strong>11. تکمیل جمله:</strong> جمله زیر را کامل کنید:<br>"She ___ a new book last week."</p>
+          <div class="options">
+            <label><input type="radio" name="qg11" value="A"> A) buys</label>
+            <label><input type="radio" name="qg11" value="B"> B) buy</label>
+            <label><input type="radio" name="qg11" value="C"> C) bought</label>
+            <label><input type="radio" name="qg11" value="D"> D) has bought</label>
+          </div>
+        </div>
+        <div class="question">
+          <p><strong>12. انتخاب جمله منفی صحیح:</strong> کدام گزینه جمله منفی صحیح در زمان گذشته ساده است؟</p>
+          <div class="options">
+            <label><input type="radio" name="qg12" value="A"> A) They didn't go to the party.</label>
+            <label><input type="radio" name="qg12" value="B"> B) They don't went to the party.</label>
+            <label><input type="radio" name="qg12" value="C"> C) They didn't went to the party.</label>
+            <label><input type="radio" name="qg12" value="D"> D) They not go to the party.</label>
+          </div>
+        </div>
+        
+        <!-- گذشته استمراری -->
+        <h3>5. گذشته استمراری (Past Continuous)</h3>
+        <div class="question">
+          <p><strong>13. انتخاب جمله صحیح:</strong> کدام گزینه جمله‌ای صحیح در زمان گذشته استمراری است؟</p>
+          <div class="options">
+            <label><input type="radio" name="qg13" value="A"> A) I was reading a book when you called.</label>
+            <label><input type="radio" name="qg13" value="B"> B) I were reading a book when you called.</label>
+            <label><input type="radio" name="qg13" value="C"> C) I am reading a book when you called.</label>
+            <label><input type="radio" name="qg13" value="D"> D) I read a book when you called.</label>
+          </div>
+        </div>
+        <div class="question">
+          <p><strong>14. تکمیل جمله:</strong> جمله زیر را کامل کنید:<br>"They ___ playing football at 5 PM yesterday."</p>
+          <div class="options">
+            <label><input type="radio" name="qg14" value="A"> A) was</label>
+            <label><input type="radio" name="qg14" value="B"> B) were</label>
+            <label><input type="radio" name="qg14" value="C"> C) are</label>
+            <label><input type="radio" name="qg14" value="D"> D) be</label>
+          </div>
+        </div>
+        <div class="question">
+          <p><strong>15. انتخاب جمله منفی صحیح:</strong> کدام گزینه جمله منفی صحیح در زمان گذشته استمراری است؟</p>
+          <div class="options">
+            <label><input type="radio" name="qg15" value="A"> A) He wasn't watching TV when I arrived.</label>
+            <label><input type="radio" name="qg15" value="B"> B) He not watching TV when I arrived.</label>
+            <label><input type="radio" name="qg15" value="C"> C) He didn't watching TV when I arrived.</label>
+            <label><input type="radio" name="qg15" value="D"> D) He weren't watching TV when I arrived.</label>
+          </div>
+        </div>
+        
+        <!-- گذشته کامل -->
+        <h3>6. گذشته کامل (Past Perfect)</h3>
+        <div class="question">
+          <p><strong>16. انتخاب جمله صحیح:</strong> کدام گزینه جمله‌ای صحیح در زمان گذشته کامل است؟</p>
+          <div class="options">
+            <label><input type="radio" name="qg16" value="A"> A) They had left before I arrived.</label>
+            <label><input type="radio" name="qg16" value="B"> B) They have left before I arrived.</label>
+            <label><input type="radio" name="qg16" value="C"> C) They left before I had arrived.</label>
+            <label><input type="radio" name="qg16" value="D"> D) They had leave before I arrived.</label>
+          </div>
+        </div>
+        <div class="question">
+          <p><strong>17. تکمیل جمله:</strong> جمله زیر را کامل کنید:<br>"By the time she came, we ___ finished dinner."</p>
+          <div class="options">
+            <label><input type="radio" name="qg17" value="A"> A) have</label>
+            <label><input type="radio" name="qg17" value="B"> B) had</label>
+            <label><input type="radio" name="qg17" value="C"> C) will have</label>
+            <label><input type="radio" name="qg17" value="D"> D) was</label>
+          </div>
+        </div>
+        <div class="question">
+          <p><strong>18. انتخاب جمله منفی صحیح:</strong> کدام گزینه جمله منفی صحیح در زمان گذشته کامل است؟</p>
+          <div class="options">
+            <label><input type="radio" name="qg18" value="A"> A) He hadn't seen the movie before last night.</label>
+            <label><input type="radio" name="qg18" value="B"> B) He hasn't seen the movie before last night.</label>
+            <label><input type="radio" name="qg18" value="C"> C) He not seen the movie before last night.</label>
+            <label><input type="radio" name="qg18" value="D"> D) He didn't seen the movie before last night.</label>
+          </div>
+        </div>
+        
+        <!-- آینده ساده -->
+        <h3>7. آینده ساده (Future Simple)</h3>
+        <div class="question">
+          <p><strong>19. انتخاب جمله صحیح:</strong> کدام گزینه جمله‌ای صحیح در زمان آینده ساده است؟</p>
+          <div class="options">
+            <label><input type="radio" name="qg19" value="A"> A) I will go to the park tomorrow.</label>
+            <label><input type="radio" name="qg19" value="B"> B) I go to the park tomorrow.</label>
+            <label><input type="radio" name="qg19" value="C"> C) I will going to the park tomorrow.</label>
+            <label><input type="radio" name="qg19" value="D"> D) I going to the park tomorrow.</label>
+          </div>
+        </div>
+        <div class="question">
+          <p><strong>20. تکمیل جمله:</strong> جمله زیر را کامل کنید:<br>"She ___ call you later."</p>
+          <div class="options">
+            <label><input type="radio" name="qg20" value="A"> A) will</label>
+            <label><input type="radio" name="qg20" value="B"> B) is</label>
+            <label><input type="radio" name="qg20" value="C"> C) would</label>
+            <label><input type="radio" name="qg20" value="D"> D) can</label>
+          </div>
+        </div>
+        <div class="question">
+          <p><strong>21. انتخاب جمله سوالی صحیح:</strong> کدام گزینه سوال صحیح در زمان آینده ساده است؟</p>
+          <div class="options">
+            <label><input type="radio" name="qg21" value="A"> A) Will they join us for dinner?</label>
+            <label><input type="radio" name="qg21" value="B"> B) Do they will join us for dinner?</label>
+            <label><input type="radio" name="qg21" value="C"> C) Are they join us for dinner?</label>
+            <label><input type="radio" name="qg21" value="D"> D) They will join us for dinner.</label>
+          </div>
+        </div>
+        
+        <!-- آینده استمراری -->
+        <h3>8. آینده استمراری (Future Continuous)</h3>
+        <div class="question">
+          <p><strong>22. انتخاب جمله صحیح:</strong> کدام گزینه جمله‌ای صحیح در زمان آینده استمراری است؟</p>
+          <div class="options">
+            <label><input type="radio" name="qg22" value="A"> A) I will be working at 9 AM tomorrow.</label>
+            <label><input type="radio" name="qg22" value="B"> B) I will working at 9 AM tomorrow.</label>
+            <label><input type="radio" name="qg22" value="C"> C) I am be working at 9 AM tomorrow.</label>
+            <label><input type="radio" name="qg22" value="D"> D) I working at 9 AM tomorrow.</label>
+          </div>
+        </div>
+        <div class="question">
+          <p><strong>23. تکمیل جمله:</strong> جمله زیر را کامل کنید:<br>"At this time next week, they ___ traveling around Europe."</p>
+          <div class="options">
+            <label><input type="radio" name="qg23" value="A"> A) will be</label>
+            <label><input type="radio" name="qg23" value="B"> B) are</label>
+            <label><input type="radio" name="qg23" value="C"> C) were</label>
+            <label><input type="radio" name="qg23" value="D"> D) will</label>
+          </div>
+        </div>
+        <div class="question">
+          <p><strong>24. انتخاب جمله منفی صحیح:</strong> کدام گزینه جمله منفی صحیح در زمان آینده استمراری است؟</p>
+          <div class="options">
+            <label><input type="radio" name="qg24" value="A"> A) She won't be attending the meeting.</label>
+            <label><input type="radio" name="qg24" value="B"> B) She will not attending the meeting.</label>
+            <label><input type="radio" name="qg24" value="C"> C) She not be attending the meeting.</label>
+            <label><input type="radio" name="qg24" value="D"> D) She won't attending the meeting.</label>
+          </div>
+        </div>
+        
+        <!-- آینده کامل -->
+        <h3>9. آینده کامل (Future Perfect)</h3>
+        <div class="question">
+          <p><strong>25. انتخاب جمله صحیح:</strong> کدام گزینه جمله‌ای صحیح در زمان آینده کامل است؟</p>
+          <div class="options">
+            <label><input type="radio" name="qg25" value="A"> A) By next year, I will have graduated.</label>
+            <label><input type="radio" name="qg25" value="B"> B) By next year, I will have graduate.</label>
+            <label><input type="radio" name="qg25" value="C"> C) By next year, I will graduate.</label>
+            <label><input type="radio" name="qg25" value="D"> D) By next year, I have graduated.</label>
+          </div>
+        </div>
+        <div class="question">
+          <p><strong>26. تکمیل جمله:</strong> جمله زیر را کامل کنید:<br>"They ___ completed the project by tomorrow."</p>
+          <div class="options">
+            <label><input type="radio" name="qg26" value="A"> A) will have</label>
+            <label><input type="radio" name="qg26" value="B"> B) will</label>
+            <label><input type="radio" name="qg26" value="C"> C) have</label>
+            <label><input type="radio" name="qg26" value="D"> D) had</label>
+          </div>
+        </div>
+        <div class="question">
+          <p><strong>27. انتخاب جمله منفی صحیح:</strong> کدام گزینه جمله منفی صحیح در زمان آینده کامل است؟</p>
+          <div class="options">
+            <label><input type="radio" name="qg27" value="A"> A) He won't have finished the work by then.</label>
+            <label><input type="radio" name="qg27" value="B"> B) He won't finished the work by then.</label>
+            <label><input type="radio" name="qg27" value="C"> C) He will not finished the work by then.</label>
+            <label><input type="radio" name="qg27" value="D"> D) He not will have finished the work by then.</label>
+          </div>
+        </div>
+        
+        <!-- جملات معلوم و مجهول -->
+        <h3>10. جملات معلوم و مجهول (Active and Passive Voice)</h3>
+        <div class="question">
+          <p><strong>28. انتخاب جمله مجهول صحیح:</strong> کدام گزینه جمله‌ای صحیح در حالت مجهول است؟</p>
+          <div class="options">
+            <label><input type="radio" name="qg28" value="A"> A) The cake was baked by my mother.</label>
+            <label><input type="radio" name="qg28" value="B"> B) My mother baked the cake.</label>
+            <label><input type="radio" name="qg28" value="C"> C) The cake is baked by my mother.</label>
+            <label><input type="radio" name="qg28" value="D"> D) The cake baked by my mother.</label>
+          </div>
+        </div>
+        <div class="question">
+          <p><strong>29. تبدیل جمله فعال به مجهول:</strong> جمله "They built the house." به صورت مجهول چیست؟</p>
+          <div class="options">
+            <label><input type="radio" name="qg29" value="A"> A) The house was built by them.</label>
+            <label><input type="radio" name="qg29" value="B"> B) The house is built by them.</label>
+            <label><input type="radio" name="qg29" value="C"> C) The house built by them.</label>
+            <label><input type="radio" name="qg29" value="D"> D) The house has been built by them.</label>
+          </div>
+        </div>
+        <div class="question">
+          <p><strong>30. انتخاب جمله معلوم صحیح:</strong> کدام گزینه جمله‌ای صحیح در حالت معلوم (Active) است؟</p>
+          <div class="options">
+            <label><input type="radio" name="qg30" value="A"> A) The report was written by John.</label>
+            <label><input type="radio" name="qg30" value="B"> B) John wrote the report.</label>
+            <label><input type="radio" name="qg30" value="C"> C) The report is written by John.</label>
+            <label><input type="radio" name="qg30" value="D"> D) The report has been written by John.</label>
+          </div>
+        </div>
+        
+        <!-- جملات مدال -->
+        <h3>11. جملات مدال (Modal Sentences)</h3>
+        <div class="question">
+          <p><strong>31. انتخاب جمله صحیح با فعل مدال:</strong> کدام گزینه جمله‌ای صحیح با استفاده از فعل مدال است؟</p>
+          <div class="options">
+            <label><input type="radio" name="qg31" value="A"> A) You must finish your homework.</label>
+            <label><input type="radio" name="qg31" value="B"> B) You must finishing your homework.</label>
+            <label><input type="radio" name="qg31" value="C"> C) You shoulds finish your homework.</label>
+            <label><input type="radio" name="qg31" value="D"> D) You cans finish your homework.</label>
+          </div>
+        </div>
+        <div class="question">
+          <p><strong>32. تکمیل جمله با فعل مدال:</strong> جمله زیر را کامل کنید:<br>"She ___ speak three languages fluently."</p>
+          <div class="options">
+            <label><input type="radio" name="qg32" value="A"> A) can</label>
+            <label><input type="radio" name="qg32" value="B"> B) must</label>
+            <label><input type="radio" name="qg32" value="C"> C) may</label>
+            <label><input type="radio" name="qg32" value="D"> D) should</label>
+          </div>
+        </div>
+        <div class="question">
+          <p><strong>33. انتخاب جمله توصیه‌ای صحیح:</strong> کدام گزینه جمله‌ای مناسب برای بیان توصیه با فعل مدال است؟</p>
+          <div class="options">
+            <label><input type="radio" name="qg33" value="A"> A) You should take a break if you're tired.</label>
+            <label><input type="radio" name="qg33" value="B"> B) You must take a break if you're tired.</label>
+            <label><input type="radio" name="qg33" value="C"> C) You cans take a break if you're tired.</label>
+            <label><input type="radio" name="qg33" value="D"> D) You may taking a break if you're tired.</label>
+          </div>
+        </div>
+      </div> <!-- پایان بخش گرامر -->
+
+      <input type="button" class="submit-btn" value="ارسال پاسخ‌ها" onclick="checkTest()">
+    </form>
+    <div id="result" style="margin-top:20px;"></div>
+  </div> <!-- پایان container -->
+
+  <script>
+    // کد تایمر
+    var timeLeft = 900; // 15 دقیقه به ثانیه (900 ثانیه)
+    var timerInterval;
+    
+    function formatTime(seconds) {
+      var m = Math.floor(seconds / 60);
+      var s = seconds % 60;
+      s = s < 10 ? "0" + s : s;
+      return m + ":" + s;
+    }
+    
+    function startTimer() {
+      var timerElement = document.getElementById("timer");
+      timerElement.innerHTML = formatTime(timeLeft);
+      timerInterval = setInterval(function() {
+        timeLeft--;
+        timerElement.innerHTML = formatTime(timeLeft);
+        if(timeLeft <= 0) {
+          clearInterval(timerInterval);
+          alert("زمان به پایان رسید. آزمون ارسال می‌شود.");
+          checkTest();
+        }
+      }, 1000);
+    }
+    
+    // تابع شروع آزمون: پنهان کردن مودال، نمایش آزمون و شروع تایمر
+    function startTest() {
+      document.getElementById("startModal").style.display = "none";
+      document.getElementById("testContainer").style.display = "block";
+      startTimer();
+    }
+    
+    // تابع بررسی پاسخ‌ها، محاسبه امتیاز و نمایش جزئیات پاسخ‌ها
+    function checkTest() {
+      clearInterval(timerInterval);
+      var score = 0;
+      var total = 43; // تعداد کل سوال‌ها
+      
+      var answers = {
+        // پاسخ‌های بخش واژگان
+        "qv1": "A",
+        "qv2": "B",
+        "qv3": "B",
+        "qv4": "C",
+        "qv5": "A",
+        "qv6": "A",
+        "qv7": "C",
+        "qv8": "B",
+        "qv9": "C",
+        "qv10": "B",
+        // پاسخ‌های بخش گرامر:
+        "qg1": "B",
+        "qg2": "B",
+        "qg3": "B",
+        "qg4": "A",
+        "qg5": "B",
+        "qg6": "A",
+        "qg7": "A",
+        "qg8": "B",
+        "qg9": "A",
+        "qg10": "A",
+        "qg11": "C",
+        "qg12": "A",
+        "qg13": "A",
+        "qg14": "B",
+        "qg15": "A",
+        "qg16": "A",
+        "qg17": "B",
+        "qg18": "A",
+        "qg19": "A",
+        "qg20": "A",
+        "qg21": "A",
+        "qg22": "A",
+        "qg23": "A",
+        "qg24": "A",
+        "qg25": "A",
+        "qg26": "A",
+        "qg27": "A",
+        "qg28": "A",
+        "qg29": "A",
+        "qg30": "B",
+        "qg31": "A",
+        "qg32": "A",
+        "qg33": "A"
+      };
+      
+      // محاسبه امتیاز
+      for (var key in answers) {
+        var radios = document.getElementsByName(key);
+        for (var i = 0; i < radios.length; i++) {
+          if (radios[i].checked && radios[i].value === answers[key]) {
+            score++;
+          }
+        }
+      }
+      
+      var percentage = (score / total) * 100;
+      var level = "";
+      if (percentage >= 80) {
+        level = "پیشرفته";
+      } else if (percentage >= 50) {
+        level = "متوسط";
+      } else {
+        level = "مبتدی";
+      }
+      
+      var resultDiv = document.getElementById("result");
+      resultDiv.innerHTML = "<h2>نتیجه آزمون</h2>" +
+                            "<p>شما " + score + " از " + total + " امتیاز کسب کرده‌اید (" + Math.round(percentage) + "%)" +
+                            "<br>سطح زبان شما: " + level + "</p>";
+      
+      // نمایش جزئیات پاسخ‌ها در قالب جدول
+      var answerTable = "<h3>جزئیات پاسخ‌ها:</h3><table style='width:100%; border-collapse: collapse;' border='1'>";
+      answerTable += "<tr><th style='padding:5px;'>شماره سوال</th><th style='padding:5px;'>پاسخ شما</th><th style='padding:5px;'>پاسخ صحیح</th></tr>";
+      for (var key in answers) {
+        var userAnswer = "";
+        var radios = document.getElementsByName(key);
+        for(var i=0; i<radios.length; i++){
+          if(radios[i].checked) {
+            userAnswer = radios[i].value;
+            break;
+          }
+        }
+        if(userAnswer === "") { userAnswer = "بدون پاسخ"; }
+        answerTable += "<tr><td style='padding:5px;'>" + key + "</td><td style='padding:5px;'>" + userAnswer + "</td><td style='padding:5px;'>" + answers[key] + "</td></tr>";
+      }
+      answerTable += "</table>";
+      
+      resultDiv.innerHTML += answerTable;
+      
+      // غیرفعال کردن تمام ورودی‌ها
+      var inputs = document.getElementsByTagName("input");
+      for(var i=0; i<inputs.length; i++){
+        inputs[i].disabled = true;
+      }
+    }
+  </script>
+</body>
+</html>
